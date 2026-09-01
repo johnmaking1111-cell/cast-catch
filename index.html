@@ -103,7 +103,7 @@
 
     async function loadData() {
       try {
-        const res = await fetch('/api/auditions');
+        const res = await fetch('audition_app/auditions.json');
         allAuditions = await res.json();
       } catch (err) {
         // Fallback sample data if standalone
