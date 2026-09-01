@@ -83,22 +83,23 @@
     <!-- Quick Search -->
     <div class="relative">
       <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-      <input type="text" id="searchInput" oninput="filterSites()" placeholder="오디션 사이트, 독백 대본, 장르 검색..." 
+      <input type="text" id="searchInput" oninput="filterSites()" placeholder="오디션 사이트, 카페, 독백 대본, 장르 검색..." 
         class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm">
     </div>
 
     <!-- Category Tabs -->
     <div class="flex space-x-2 overflow-x-auto hide-scrollbar py-1">
-      <button onclick="selectCategory('전체')" class="cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition">전체 (18)</button>
+      <button onclick="selectCategory('전체')" class="cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition">전체 (22)</button>
       <button onclick="selectCategory('영화/드라마')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎬 영화 · 드라마 (8)</button>
+      <button onclick="selectCategory('커뮤니티/카페')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">💬 네이버 4대 카페 (4)</button>
       <button onclick="selectCategory('연극/뮤지컬')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎭 연극 · 뮤지컬 (4)</button>
       <button onclick="selectCategory('광고/모델')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📸 광고 · 모델 (4)</button>
       <button onclick="selectCategory('자료실/교육')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📜 대본 자료실 · 아카데미 (2)</button>
     </div>
 
     <div class="flex items-center justify-between text-xs text-slate-500 px-1">
-      <span>검증된 실시간 오디션 포털</span>
-      <span>총 <b id="countDisplay" class="text-indigo-600">18</b>개 사이트</span>
+      <span>검증된 실시간 오디션 & 커뮤니티</span>
+      <span>총 <b id="countDisplay" class="text-indigo-600">22</b>개 사이트</span>
     </div>
 
     <div id="siteList" class="space-y-2.5"></div>
@@ -133,6 +134,7 @@
 
   <script>
     const SITES = [
+      // 🎬 1~8. 영화 · 드라마 · 웹드라마
       { id: 1, name: "1. 필름메이커스 (Filmmakers)", category: "영화/드라마", badge: "영화계 1위", description: "상업영화, 독립/단편영화, OTT 시리즈, 웹드라마 배우 모집 게시판", url: "https://www.filmmakers.co.kr/actorsAudition", tag: "영화 · 드라마", iconColor: "bg-amber-500" },
       { id: 2, name: "2. 플필 (Plfil)", category: "영화/드라마", badge: "온라인 캐스팅 1위", description: "제작사 공식 캐스팅 공고, 실시간 오디션 지원 및 프로필 투어", url: "https://plfil.com/casting", tag: "캐스팅 플랫폼", iconColor: "bg-sky-500" },
       { id: 3, name: "3. 캐스팅114 (Casting114)", category: "영화/드라마", badge: "오디션 & 대본 아카이브", description: "영화, 드라마, 방송 연기자 오디션 정보 및 스태프 구인, 대본 자료실", url: "https://casting114.com/views/cast_atwant/list.html", tag: "오디션 아카이브", iconColor: "bg-emerald-600" },
@@ -141,16 +143,28 @@
       { id: 6, name: "6. 메가폰코리아 (Megaphone Korea)", category: "영화/드라마", badge: "메이저 캐스팅 포털", description: "방송사, 대형 제작사, 기획사 연합 오디션 및 영상 프로젝트 캐스팅", url: "http://www.megaphonekorea.com/audition/variety", tag: "공식 오디션", iconColor: "bg-cyan-600" },
       { id: 7, name: "7. 씨네허브 (Cinehub Korea)", category: "영화/드라마", badge: "단편영화 플랫폼", description: "국내외 독립 단편영화 배우 구인 및 영화인 네트워크", url: "http://www.cinehubkorea.com/", tag: "독립 단편영화", iconColor: "bg-red-500" },
       { id: 8, name: "8. 캐스틱 (Castik)", category: "영화/드라마", badge: "숏폼 / 웹드라마", description: "유튜브 및 숏폼 드라마, 웹시리즈, 독립영화 신인 배우 캐스팅", url: "https://castik.co.kr/", tag: "숏폼 · 웹드", iconColor: "bg-violet-500" },
-      { id: 9, name: "9. OTR (우리들의 연극세계)", category: "연극/뮤지컬", badge: "대학로 공연계 1위", description: "전국 연극, 창작극, 소극장/대극장 뮤지컬, 극단 신입 단원 모집", url: "https://otr.co.kr/audition/", tag: "연극 · 뮤지컬", iconColor: "bg-rose-500" },
-      { id: 10, name: "10. 플레이DB (PlayDB)", category: "연극/뮤지컬", badge: "인터파크 공식 포털", description: "대극장 라이선스 뮤지컬, 정통 연극 전 배역 및 앙상블 공식 오디션", url: "http://www.playdb.co.kr/community/Publicity_list.asp?bbsno=29", tag: "대극장 뮤지컬", iconColor: "bg-purple-600" },
-      { id: 11, name: "11. 더뮤지컬 (The Musical)", category: "연극/뮤지컬", badge: "뮤지컬 전문 매거진", description: "신작 뮤지컬, 대형 제작사 공식 오디션 공고 및 캐스팅 소식", url: "https://www.themusical.co.kr/", tag: "뮤지컬 매거진", iconColor: "bg-pink-500" },
-      { id: 12, name: "12. KOPIS 공연예술통합전산망", category: "연극/뮤지컬", badge: "문체부 공공 포털", description: "전국 국공립 극단, 시립뮤지컬단, 문화재단 공연 오디션 및 제작 공모", url: "https://kopis.or.kr/por/main/main.do", tag: "국공립 · 공공", iconColor: "bg-emerald-600" },
-      { id: 13, name: "13. 모델나라 (Model Nara)", category: "광고/모델", badge: "광고/CF 모델 1위", description: "TV CF, 브랜드 바이럴 영상, 패션 룩북, 뷰티/피팅 모델 실시간 섭외", url: "https://modelnara.com/", tag: "광고 · CF 모델", iconColor: "bg-orange-500" },
-      { id: 14, name: "14. 원픽 (ONEPICK)", category: "광고/모델", badge: "엔터테인먼트 캐스팅", description: "기획사 전속 배우 오디션 및 브랜드 앰버서더/CF 모델 캐스팅", url: "https://www.myonepick.com/", tag: "소속사 · 모델", iconColor: "bg-yellow-500" },
-      { id: 15, name: "15. 콘테스트코리아", category: "광고/모델", badge: "대회 · 선발대회", description: "신인 연기자 선발대회, 탤런트 오디션, 모델 콘테스트 정보 모음", url: "https://www.contestkorea.com/sub/list.php?int_gbn=1&Txt_bcode=030410001", tag: "선발대회", iconColor: "bg-amber-600" },
-      { id: 16, name: "16. 링커리어 (Linkareer)", category: "광고/모델", badge: "청년/대학생 포털", description: "브랜드 앰버서더, 숏폼 크리에이터, 엔터테인먼트 신인 공모", url: "https://linkareer.com/", tag: "앰버서더", iconColor: "bg-sky-600" },
-      { id: 17, name: "17. YSDB (연기 대본 & 독백)", category: "자료실/교육", badge: "무료 대본 아카이브 1위", description: "수천 편의 영화·드라마·연극 1인 독백 및 오디션 자유연기 대본 제공", url: "https://www.ysdb.kr/", tag: "독백 대본 자료실", iconColor: "bg-teal-600" },
-      { id: 18, name: "18. 한국영화아카데미 (KAFA)", category: "자료실/교육", badge: "영진위 영화 교육기관", description: "KAFA 장편과정 및 정규과정 졸업작품 주·조연 배우 공개 모집", url: "https://www.kafa.ac/", tag: "영화아카데미", iconColor: "bg-indigo-700" }
+
+      // 💬 9~12. 배우 대표 4대 네이버 카페
+      { id: 9, name: "9. 우리연기할래 (네이버 카페)", category: "커뮤니티/카페", badge: "국내 1위 배우 커뮤니티", description: "배우 지망생 1위 카페. 영화/드라마 오디션 공고, 대본, 연기 스터디 및 프로필 투어 정보", url: "https://cafe.naver.com/actorsway", tag: "네이버 대표 카페", iconColor: "bg-emerald-500" },
+      { id: 10, name: "10. 액터길드 (네이버 카페)", category: "커뮤니티/카페", badge: "프로필 투어의 성지", description: "상암·강남 영화사/제작사 실시간 프로필 박스 위치, 캐스팅 디렉터 소식 및 비공개 오디션", url: "https://cafe.naver.com/actorsguild", tag: "프로필 투어 1위", iconColor: "bg-teal-600" },
+      { id: 11, name: "11. 대본창고 (네이버 카페)", category: "커뮤니티/카페", badge: "1만 대본 & 캐스팅팀 직영", description: "현직 캐스팅 디렉터 직접 운영. 1만여 건 드라마/영화 대본 보유 및 단역·조연 직속 캐스팅", url: "https://cafe.naver.com/cgtstar", tag: "대본 아카이브 1위", iconColor: "bg-blue-700" },
+      { id: 12, name: "12. 도플룩 (네이버 카페)", category: "커뮤니티/카페", badge: "영화 감독·연출자 상주", description: "단편영화 감독, 영상 제작자들의 배우 구인구직. 독립/단편영화 주·조연 직거래 캐스팅", url: "https://cafe.naver.com/doflook", tag: "단편영화 캐스팅", iconColor: "bg-purple-700" },
+
+      // 🎭 13~16. 연극 · 뮤지컬 · 공연예술
+      { id: 13, name: "13. OTR (우리들의 연극세계)", category: "연극/뮤지컬", badge: "대학로 공연계 1위", description: "전국 연극, 창작극, 소극장/대극장 뮤지컬, 극단 신입 단원 모집", url: "https://otr.co.kr/audition/", tag: "연극 · 뮤지컬", iconColor: "bg-rose-500" },
+      { id: 14, name: "14. 플레이DB (PlayDB)", category: "연극/뮤지컬", badge: "인터파크 공식 포털", description: "대극장 라이선스 뮤지컬, 정통 연극 전 배역 및 앙상블 공식 오디션", url: "http://www.playdb.co.kr/community/Publicity_list.asp?bbsno=29", tag: "대극장 뮤지컬", iconColor: "bg-purple-600" },
+      { id: 15, name: "15. 더뮤지컬 (The Musical)", category: "연극/뮤지컬", badge: "뮤지컬 전문 매거진", description: "신작 뮤지컬, 대형 제작사 공식 오디션 공고 및 캐스팅 소식", url: "https://www.themusical.co.kr/", tag: "뮤지컬 매거진", iconColor: "bg-pink-500" },
+      { id: 16, name: "16. KOPIS 공연예술통합전산망", category: "연극/뮤지컬", badge: "문체부 공공 포털", description: "전국 국공립 극단, 시립뮤지컬단, 문화재단 공연 오디션 및 제작 공모", url: "https://kopis.or.kr/por/main/main.do", tag: "국공립 · 공공", iconColor: "bg-emerald-600" },
+
+      // 📸 17~20. 광고 · 모델 · CF
+      { id: 17, name: "17. 모델나라 (Model Nara)", category: "광고/모델", badge: "광고/CF 모델 1위", description: "TV CF, 브랜드 바이럴 영상, 패션 룩북, 뷰티/피팅 모델 실시간 섭외", url: "https://modelnara.com/", tag: "광고 · CF 모델", iconColor: "bg-orange-500" },
+      { id: 18, name: "18. 원픽 (ONEPICK)", category: "광고/모델", badge: "엔터테인먼트 캐스팅", description: "기획사 전속 배우 오디션 및 브랜드 앰버서더/CF 모델 캐스팅", url: "https://www.myonepick.com/", tag: "소속사 · 모델", iconColor: "bg-yellow-500" },
+      { id: 19, name: "19. 콘테스트코리아", category: "광고/모델", badge: "대회 · 선발대회", description: "신인 연기자 선발대회, 탤런트 오디션, 모델 콘테스트 정보 모음", url: "https://www.contestkorea.com/sub/list.php?int_gbn=1&Txt_bcode=030410001", tag: "선발대회", iconColor: "bg-amber-600" },
+      { id: 20, name: "20. 링커리어 (Linkareer)", category: "광고/모델", badge: "청년/대학생 포털", description: "브랜드 앰버서더, 숏폼 크리에이터, 엔터테인먼트 신인 공모", url: "https://linkareer.com/", tag: "앰버서더", iconColor: "bg-sky-600" },
+
+      // 📜 21~22. 독백 대본 자료실 & 아카데미
+      { id: 21, name: "21. YSDB (연기 대본 & 독백)", category: "자료실/교육", badge: "무료 대본 아카이브 1위", description: "수천 편의 영화·드라마·연극 1인 독백 및 오디션 자유연기 대본 제공", url: "https://www.ysdb.kr/", tag: "독백 대본 자료실", iconColor: "bg-teal-600" },
+      { id: 22, name: "22. 한국영화아카데미 (KAFA)", category: "자료실/교육", badge: "영진위 영화 교육기관", description: "KAFA 장편과정 및 정규과정 졸업작품 주·조연 배우 공개 모집", url: "https://www.kafa.ac/", tag: "영화아카데미", iconColor: "bg-indigo-700" }
     ];
 
     let currentCategory = '전체';
@@ -241,7 +255,7 @@
 
           <a href="${site.url}" target="_blank" rel="noopener noreferrer" 
             class="w-full text-center py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center space-x-1.5 active:scale-98">
-            <span>최신 오디션 공고 확인하러 가기</span>
+            <span>바로가기</span>
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
           </a>
         </div>
