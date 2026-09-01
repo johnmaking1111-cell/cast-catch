@@ -52,13 +52,25 @@
   <!-- Main Container -->
   <main class="max-w-md mx-auto px-4 pt-3 space-y-3.5">
 
-    <!-- Notice Banner (Studio Johnmaking Support Banner) -->
+    <!-- PWA Install Guide Banner (Mobile) -->
+    <div id="iosInstallGuide" class="bg-indigo-50 border border-indigo-200/80 rounded-2xl p-3 flex items-start space-x-2.5 text-xs text-indigo-900 shadow-sm">
+      <span class="text-base shrink-0">📲</span>
+      <div class="space-y-0.5">
+        <p class="font-bold text-indigo-950">스마트폰 홈 화면에 앱으로 설치하기</p>
+        <p class="text-[11px] text-indigo-700 leading-snug">
+          브라우저 메뉴에서 <b>[홈 화면에 추가]</b>를 누르면 상단 주소창 없는 진짜 앱으로 설치됩니다!
+        </p>
+      </div>
+      <button onclick="document.getElementById('iosInstallGuide').remove()" class="text-slate-400 hover:text-slate-600 p-1">✕</button>
+    </div>
+
+    <!-- Notice Banner (Studio Johnmaking & CastCatch Support Banner) -->
     <div class="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-2xl p-4 shadow-md shadow-indigo-100 relative overflow-hidden">
       <div class="relative z-10">
         <div class="inline-flex items-center space-x-1 bg-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-semibold mb-1.5 backdrop-blur-sm text-amber-300">
-          <span> 스튜디오 존메이킹이 힘껏 응원합니다</span>
+          <span>✨ 스튜디오 존메이킹이 힘껏 응원합니다</span>
         </div>
-        <h2 class="text-sm font-bold leading-snug">대한민국 모든 배우님들의 꿈을 향한 도전을<br>원터치 오디션 포털로 응원합니다!</h2>
+        <h2 class="text-sm font-bold leading-snug">캐스트캐치가 대한민국 모든 배우님들의<br>꿈을 향한 도전을 응원합니다!</h2>
         <p class="text-[11px] text-indigo-100 mt-1">영화 · 드라마 · 연극 · 뮤지컬 · 광고 · 캐스팅114 총망라</p>
       </div>
       <div class="absolute -right-3 -bottom-4 text-white/10 text-7xl font-extrabold select-none">ACT</div>
