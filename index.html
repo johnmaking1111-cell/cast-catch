@@ -87,17 +87,17 @@
         class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm">
     </div>
 
-    <!-- Category Tabs -->
-    <div class="flex space-x-2 overflow-x-auto hide-scrollbar py-1">
-      <button onclick="selectCategory('전체')" class="cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition">전체 (22)</button>
-      <button onclick="selectCategory('영화/드라마')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎬 영화 · 드라마 (8)</button>
-      <button onclick="selectCategory('커뮤니티/카페')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">💬 네이버 4대 카페 (4)</button>
-      <button onclick="selectCategory('연극/뮤지컬')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎭 연극 · 뮤지컬 (4)</button>
-      <button onclick="selectCategory('광고/모델')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📸 광고 · 모델 (4)</button>
-      <button onclick="selectCategory('자료실/교육')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📜 대본 자료실 · 아카데미 (2)</button>
+    <!-- 🌟 Category Tabs (2줄 그리드로 잘림 없이 한눈에 보기) 🌟 -->
+    <div class="grid grid-cols-3 gap-1.5 py-0.5">
+      <button onclick="selectCategory('전체')" class="cat-btn active py-2 px-1 rounded-xl text-[11px] font-bold text-center bg-indigo-600 text-white shadow-xs transition active:scale-95">전체 (22)</button>
+      <button onclick="selectCategory('영화/드라마')" class="cat-btn py-2 px-1 rounded-xl text-[11px] font-semibold text-center bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-100 shadow-xs transition active:scale-95">🎬 영화·드라마 (8)</button>
+      <button onclick="selectCategory('커뮤니티/카페')" class="cat-btn py-2 px-1 rounded-xl text-[11px] font-semibold text-center bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-100 shadow-xs transition active:scale-95">💬 4대 카페 (4)</button>
+      <button onclick="selectCategory('연극/뮤지컬')" class="cat-btn py-2 px-1 rounded-xl text-[11px] font-semibold text-center bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-100 shadow-xs transition active:scale-95">🎭 연극·뮤지컬 (4)</button>
+      <button onclick="selectCategory('광고/모델')" class="cat-btn py-2 px-1 rounded-xl text-[11px] font-semibold text-center bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-100 shadow-xs transition active:scale-95">📸 광고·모델 (4)</button>
+      <button onclick="selectCategory('자료실/교육')" class="cat-btn py-2 px-1 rounded-xl text-[11px] font-semibold text-center bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-100 shadow-xs transition active:scale-95">📜 대본 자료실 (2)</button>
     </div>
 
-    <div class="flex items-center justify-between text-xs text-slate-500 px-1">
+    <div class="flex items-center justify-between text-xs text-slate-500 px-1 pt-0.5">
       <span>검증된 실시간 오디션 & 커뮤니티</span>
       <span>총 <b id="countDisplay" class="text-indigo-600">22</b>개 사이트</span>
     </div>
@@ -194,9 +194,9 @@
       currentCategory = cat;
       document.querySelectorAll('.cat-btn').forEach(btn => {
         if (btn.innerText.includes(cat) || (cat === '전체' && btn.innerText.includes('전체'))) {
-          btn.className = "cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition";
+          btn.className = "cat-btn active py-2 px-1 rounded-xl text-[11px] font-bold text-center bg-indigo-600 text-white shadow-xs transition active:scale-95";
         } else {
-          btn.className = "cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition";
+          btn.className = "cat-btn py-2 px-1 rounded-xl text-[11px] font-semibold text-center bg-white text-slate-700 border border-slate-200/90 hover:bg-slate-100 shadow-xs transition active:scale-95";
         }
       });
       filterSites();
