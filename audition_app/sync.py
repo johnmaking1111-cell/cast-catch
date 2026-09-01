@@ -1,41 +1,44 @@
 import json
 import os
-from scrapers import OTRScraper, FilmmakersScraper
-from data_store import load_auditions, save_auditions
-from collector import parse_with_ai_fallback
+from scrapers import (
+    OTRScraper, 
+    FilmmakersScraper, 
+    StarletScraper, 
+    PlayDBScraper, 
+    MegaphoneScraper, 
+    ContestKoreaScraper
+)
+from data_store import load_auditions, add_audition
 
 def run_full_sync():
-    """
-    1. 기존 공고 로드
-    2. OTR 및 Filmmakers 최신 공고 스크래핑
-    3. 중복 확인 (source_url 기준)
-    4. 신규 공고 정제 및 DB 추가
-    """
     existing_items = load_auditions()
     existing_urls = {x.get("source_url") for x in existing_items if x.get("source_url")}
+    existing_titles = {x.get("title") for x in existing_items if x.get("title")}
     
-    print(f"[*] 기존 공고 수: {len(existing_items)}건")
+    print(f"[*] 기존 등록 공고: {len(existing_items)}건")
     
-    # 1. OTR 수집
-    otr_items = OTRScraper.scrape_recent_notices()
-    new_otr_count = 0
-    for item in otr_items:
-        if item["source_url"] not in existing_urls:
-            # 상세 내용 파싱 및 정제
-            parsed = parse_with_ai_fallback(item["title"], item["source_site"], item["source_url"])
-            existing_urls.add(item["source_url"])
-            new_otr_count += 1
-            
-    # 2. Filmmakers 수집
-    fm_items = FilmmakersScraper.scrape_recent_notices()
-    new_fm_count = 0
-    for item in fm_items:
-        if item["source_url"] not in existing_urls:
-            parsed = parse_with_ai_fallback(item["title"], item["source_site"], item["source_url"])
-            existing_urls.add(item["source_url"])
-            new_fm_count += 1
-            
-    print(f"[+] 신규 수집 완료: OTR {new_otr_count}건, Filmmakers {new_fm_count}건")
+    scrapers = [
+        ("OTR (연극/뮤지컬)", OTRScraper.scrape(pages=3)),
+        ("Filmmakers (영화/드라마/광고)", FilmmakersScraper.scrape(pages=3)),
+        ("스탈렛 스튜디오 (상업/독립영화)", StarletScraper.scrape()),
+        ("플레이DB (대극장 뮤지컬/연극)", PlayDBScraper.scrape()),
+        ("메가폰코리아 (공식 캐스팅)", MegaphoneScraper.scrape()),
+        ("콘테스트코리아 (선발대회/공모전)", ContestKoreaScraper.scrape())
+    ]
+    
+    total_added = 0
+    for name, items in scrapers:
+        added_count = 0
+        for item in items:
+            if item["source_url"] not in existing_urls and item["title"] not in existing_titles:
+                add_audition(item)
+                existing_urls.add(item["source_url"])
+                existing_titles.add(item["title"])
+                added_count += 1
+                total_added += 1
+        print(f"[+] {name}: {added_count}건 신규 수집 완료")
+        
+    print(f"[*] 총 신규 추가: {total_added}건 | 누적 전체 공고: {len(load_auditions())}건")
 
 if __name__ == "__main__":
     run_full_sync()
