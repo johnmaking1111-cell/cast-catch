@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>배우 오디션 모아보기 | CastCatch</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <style>
+    body { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 pb-20 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top App Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-md mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-indigo-200">🎭</span>
+        <div>
+          <h1 class="text-base font-bold tracking-tight text-slate-900 leading-none">CastCatch</h1>
+          <span class="text-[10px] font-medium text-indigo-600">배우 오디션 모아보기</span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button id="bookmarkTabBtn" onclick="toggleBookmarkView()" class="relative p-2 text-slate-500 hover:text-indigo-600 transition">
+          <i data-lucide="bookmark" class="w-5 h-5"></i>
+          <span id="bookmarkBadge" class="hidden absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full"></span>
+        </button>
+        <button onclick="shareApp()" class="p-2 text-slate-500 hover:text-indigo-600 transition">
+          <i data-lucide="share-2" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-md mx-auto px-4 pt-3">
+
+    <!-- Search Input -->
+    <div class="relative mb-3">
+      <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+      <input type="text" id="searchInput" oninput="applyFilters()" placeholder="작품명, 배역, 제작사 검색..." 
+        class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm">
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="flex space-x-2 overflow-x-auto hide-scrollbar mb-3 py-1">
+      <button onclick="selectCategory('전체')" class="cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition">전체</button>
+      <button onclick="selectCategory('영화')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎬 영화</button>
+      <button onclick="selectCategory('드라마')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📺 드라마</button>
+      <button onclick="selectCategory('연극')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎭 연극</button>
+      <button onclick="selectCategory('뮤지컬')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎶 뮤지컬</button>
+      <button onclick="selectCategory('광고')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📸 광고/CF</button>
+    </div>
+
+    <!-- Filter Bar (Gender, Sort, Counter) -->
+    <div class="flex items-center justify-between text-xs text-slate-500 mb-3 px-1">
+      <div class="flex items-center space-x-2">
+        <select id="genderFilter" onchange="applyFilters()" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
+          <option value="전체">성별: 전체</option>
+          <option value="남성">남성</option>
+          <option value="여성">여성</option>
+          <option value="남/여">남/여 공용</option>
+        </select>
+        <select id="sortFilter" onchange="applyFilters()" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
+          <option value="deadline">마감임박순</option>
+          <option value="latest">최신등록순</option>
+        </select>
+      </div>
+      <div>
+        총 <span id="countDisplay" class="font-bold text-indigo-600">0</span>건
+      </div>
+    </div>
+
+    <!-- Audition Card List -->
+    <div id="cardList" class="space-y-3">
+      <!-- Dynamic cards rendered via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16">
+      <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400 mb-3">
+        <i data-lucide="inbox" class="w-6 h-6"></i>
+      </div>
+      <p class="text-sm font-semibold text-slate-600">조건에 맞는 공고가 없습니다.</p>
+      <p class="text-xs text-slate-400 mt-1">필터를 초기화하거나 검색어를 변경해 보세요.</p>
+    </div>
+
+  </main>
+
+  <script>
+    let allAuditions = [];
+    let currentCategory = '전체';
+    let isBookmarkOnly = false;
+    let bookmarks = JSON.parse(localStorage.getItem('castcatch_bookmarks') || '[]');
+
+    async function loadData() {
+      try {
+        const res = await fetch('/api/auditions');
+        allAuditions = await res.json();
+      } catch (err) {
+        // Fallback sample data if standalone
+        allAuditions = [
+          {
+            id: 1, category: "영화", title: "[상업영화] 휴먼 드라마 장편영화 20대 후반~30대 초반 남/여 조연 배우 모집",
+            production: "케이엔터테인먼트", source_site: "Filmmakers", source_url: "https://www.filmmakers.co.kr",
+            roles_summary: "남성 형사(30대 초), 여성 변호사(20대 후)", gender: "남/여", age_group: "20대, 30대",
+            deadline: "2026-09-12", compensation: "회차당 50만원 (협의)", contact_email: "audition@knent-film.com",
+            description: "하반기 크랭크인 예정인 상업영화입니다. 일상적이고 자연스러운 생활 연기 가능자 우대합니다."
+          },
+          {
+            id: 2, category: "드라마", title: "[OTT 시리즈] 8부작 스릴러 드라마 주요 단역 및 이미지 단역 캐스팅",
+            production: "스튜디오 블루", source_site: "플필", source_url: "https://plfil.com",
+            roles_summary: "카페 알바생(20대 여), 회사원(30대 남), 베테랑 형사(40대 남)", gender: "남/여", age_group: "20대, 30대, 40대",
+            deadline: "2026-09-08", compensation: "출연료 지급 (추후 협의)", contact_email: "casting@studioblue.tv",
+            description: "글로벌 OTT 플랫폼 편성 확정작으로, 개성 있는 마스크와 탄탄한 연기력을 갖춘 신인/경력 배우님들의 많은 지원 바랍니다."
+          },
+          {
+            id: 3, category: "연극", title: "[연극] 2026 하반기 정기공연 블랙코미디 연극 전 배역 오디션",
+            production: "극단 청년무대", source_site: "OTR", source_url: "https://otr.co.kr/audition/",
+            roles_summary: "주인공 진우(20대 중후반 남), 수연(20대 여), 멀티(20~30대)", gender: "남/여", age_group: "20대, 30대",
+            deadline: "2026-09-05", compensation: "티켓 수익 쉐어 및 회당 출연료 지급", contact_email: "theatre_stage@naver.com",
+            description: "대학로 소극장에서 3개월간 장기 상연 예정인 블랙코미디 창작극입니다. 열정과 에너지가 넘치는 배우님을 모십니다."
+          },
+          {
+            id: 4, category: "뮤지컬", title: "[창작뮤지컬] 2026 대극장 창작 뮤지컬 앙상블 및 주/조연 커버 모집",
+            production: "(주)뮤지컬아트컴퍼니", source_site: "OTR", source_url: "https://otr.co.kr/audition/",
+            roles_summary: "남/여 앙상블(댄스 특기자 우대), 조연 커버", gender: "남/여", age_group: "20대, 30대",
+            deadline: "2026-09-20", compensation: "공연 회당 페이 및 연습실 식대 지급", contact_email: "musical_art@casting.kr",
+            description: "음악적 감각과 안정적인 보컬, 안무 소화 능력을 겸비한 뮤지컬 배우님을 선발합니다."
+          },
+          {
+            id: 5, category: "광고", title: "[TV/디지털 CF] 프리미엄 뷰티 스킨케어 브랜드 바이럴 광고 메인 모델",
+            production: "플랜에이 프로덕션", source_site: "Filmmakers", source_url: "https://www.filmmakers.co.kr",
+            roles_summary: "맑고 깨끗한 이미지의 여성 모델(20대), 남성 모델(20대)", gender: "남/여", age_group: "20대, 30대",
+            deadline: "2026-09-04", compensation: "300만원 ~ 500만원 (매체 협의)", contact_email: "ad_model@plana-prod.com",
+            description: "피부결이 정돈되고 표정 연기가 자연스러운 모델을 찾습니다. 무보정 프로필 및 영상 링크 필수 첨부."
+          }
+        ];
+      }
+      updateBookmarkBadge();
+      applyFilters();
+    }
+
+    function selectCategory(cat) {
+      currentCategory = cat;
+      isBookmarkOnly = false;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.innerText.includes(cat)) {
+          btn.className = "cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition";
+        } else {
+          btn.className = "cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition";
+        }
+      });
+      applyFilters();
+    }
+
+    function toggleBookmarkView() {
+      isBookmarkOnly = !isBookmarkOnly;
+      const btn = document.getElementById('bookmarkTabBtn');
+      if (isBookmarkOnly) {
+        btn.classList.add('text-indigo-600');
+      } else {
+        btn.classList.remove('text-indigo-600');
+      }
+      applyFilters();
+    }
+
+    function toggleBookmark(id, event) {
+      event.stopPropagation();
+      if (bookmarks.includes(id)) {
+        bookmarks = bookmarks.filter(x => x !== id);
+      } else {
+        bookmarks.push(id);
+      }
+      localStorage.setItem('castcatch_bookmarks', JSON.stringify(bookmarks));
+      updateBookmarkBadge();
+      applyFilters();
+    }
+
+    function updateBookmarkBadge() {
+      const badge = document.getElementById('bookmarkBadge');
+      if (bookmarks.length > 0) {
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function getDDay(deadlineStr) {
+      if (!deadlineStr || deadlineStr.includes("상시") || deadlineStr.includes("마감")) return "상시채용";
+      const today = new Date("2026-08-31");
+      const target = new Date(deadlineStr);
+      const diff = Math.ceil((target - today) / (1000 * 60 * 60 * 24));
+      if (diff < 0) return "마감";
+      if (diff === 0) return "D-Day";
+      return `D-${diff}`;
+    }
+
+    function getCategoryBadgeColor(cat) {
+      switch(cat) {
+        case '영화': return 'bg-amber-100 text-amber-800 border-amber-200';
+        case '드라마': return 'bg-sky-100 text-sky-800 border-sky-200';
+        case '연극': return 'bg-rose-100 text-rose-800 border-rose-200';
+        case '뮤지컬': return 'bg-purple-100 text-purple-800 border-purple-200';
+        case '광고': return 'bg-emerald-100 text-emerald-800 border-emerald-200';
+        default: return 'bg-slate-100 text-slate-800 border-slate-200';
+      }
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const gender = document.getElementById('genderFilter').value;
+      const sort = document.getElementById('sortFilter').value;
+
+      let filtered = allAuditions.filter(item => {
+        if (isBookmarkOnly && !bookmarks.includes(item.id)) return false;
+        if (currentCategory !== '전체' && item.category !== currentCategory) return false;
+        if (gender !== '전체' && item.gender !== gender && item.gender !== '남/여' && item.gender !== '무관') return false;
+        if (search) {
+          const matchTitle = item.title.toLowerCase().includes(search);
+          const matchRole = (item.roles_summary || '').toLowerCase().includes(search);
+          const matchProd = (item.production || '').toLowerCase().includes(search);
+          if (!matchTitle && !matchRole && !matchProd) return false;
+        }
+        return true;
+      });
+
+      if (sort === 'deadline') {
+        filtered.sort((a, b) => (a.deadline || '9999').localeCompare(b.deadline || '9999'));
+      } else {
+        filtered.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+      }
+
+      renderList(filtered);
+    }
+
+    function renderList(items) {
+      const container = document.getElementById('cardList');
+      const emptyState = document.getElementById('emptyState');
+      const countDisplay = document.getElementById('countDisplay');
+
+      countDisplay.innerText = items.length;
+
+      if (items.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      container.innerHTML = items.map(item => {
+        const isBookmarked = bookmarks.includes(item.id);
+        const dDay = getDDay(item.deadline);
+        const dDayColor = dDay.startsWith("D-") && parseInt(dDay.replace("D-","")) <= 5 
+          ? "bg-red-50 text-red-600 border-red-200" 
+          : "bg-slate-100 text-slate-600 border-slate-200";
+
+        return `
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm hover:shadow-md transition duration-200">
+            <!-- Header: Category & D-Day & Bookmark -->
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center space-x-1.5">
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md border ${getCategoryBadgeColor(item.category)}">${item.category}</span>
+                <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md border ${dDayColor}">${dDay}</span>
+                <span class="text-[11px] text-slate-400 font-medium">${item.source_site}</span>
+              </div>
+              <button onclick="toggleBookmark(${item.id}, event)" class="p-1 text-slate-400 hover:text-indigo-600 transition">
+                <i data-lucide="bookmark" class="w-4 h-4 ${isBookmarked ? 'fill-indigo-600 text-indigo-600' : ''}"></i>
+              </button>
+            </div>
+
+            <!-- Title -->
+            <h2 class="text-sm font-bold text-slate-900 leading-snug line-clamp-2 mb-1.5">${item.title}</h2>
+
+            <!-- Role & Condition Badges -->
+            <div class="space-y-1 text-xs text-slate-600 mb-3 bg-slate-50 p-2.5 rounded-xl">
+              <div class="flex items-start space-x-1">
+                <span class="font-semibold text-slate-700 shrink-0">배역:</span>
+                <span class="text-slate-800 line-clamp-1">${item.roles_summary || '본문 참조'}</span>
+              </div>
+              <div class="flex items-center space-x-2 text-[11px] text-slate-500 pt-0.5">
+                <span>👤 ${item.gender}</span>
+                <span>•</span>
+                <span>🎂 ${item.age_group}</span>
+                <span>•</span>
+                <span>💰 ${item.compensation}</span>
+              </div>
+            </div>
+
+            <!-- Actions: Outbound link & Email copy -->
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-100">
+              <a href="${item.source_url}" target="_blank" rel="noopener noreferrer" 
+                class="flex-1 text-center py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition flex items-center justify-center space-x-1">
+                <span>원문 공고 보기</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
+              ${item.contact_email ? `
+                <button onclick="copyEmail('${item.contact_email}')" 
+                  class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium transition flex items-center space-x-1">
+                  <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                  <span>이메일</span>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function copyEmail(email) {
+      navigator.clipboard.writeText(email).then(() => {
+        alert(`접수처 이메일 주소가 복사되었습니다:\n${email}`);
+      });
+    }
+
+    function shareApp() {
+      if (navigator.share) {
+        navigator.share({
+          title: '배우 오디션 모아보기 | CastCatch',
+          text: '영화, 드라마, 연극, 뮤지컬, 광고 오디션 공고를 한곳에서 확인하세요!',
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          alert('앱 링크가 클립보드에 복사되었습니다.');
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadData();
+    });
+  </script>
+</body>
+</html>
