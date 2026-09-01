@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>배우 오디션 포털 | CastCatch</title>
-  <!-- Tailwind CSS CDN -->
+  <title>대한민국 배우 오디션 올인원 포털 | CastCatch</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <style>
     body { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
@@ -18,63 +15,54 @@
 </head>
 <body class="bg-slate-50 text-slate-900 pb-28 antialiased selection:bg-indigo-500 selection:text-white">
 
-  <!-- Top App Bar -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-md mx-auto px-4 h-14 flex items-center justify-between">
       <div class="flex items-center space-x-2">
         <span class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-indigo-200">🎭</span>
         <div>
           <h1 class="text-base font-bold tracking-tight text-slate-900 leading-none">CastCatch</h1>
-          <span class="text-[10px] font-semibold text-indigo-600">대한민국 배우 오디션 올인원 포털</span>
+          <span class="text-[10px] font-semibold text-indigo-600">실시간 오디션 포털 (검증완료)</span>
         </div>
       </div>
-      <div class="flex items-center space-x-2">
-        <button onclick="shareApp()" class="p-2 text-slate-500 hover:text-indigo-600 transition" title="공유하기">
-          <i data-lucide="share-2" class="w-5 h-5"></i>
-        </button>
-      </div>
+      <button onclick="shareApp()" class="p-2 text-slate-500 hover:text-indigo-600 transition" title="공유하기">
+        <i data-lucide="share-2" class="w-5 h-5"></i>
+      </button>
     </div>
   </header>
 
-  <!-- Main Container -->
   <main class="max-w-md mx-auto px-4 pt-3 space-y-4">
-
-    <!-- Notice Banner -->
     <div class="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-2xl p-4 shadow-md shadow-indigo-100 relative overflow-hidden">
       <div class="relative z-10">
         <div class="inline-flex items-center space-x-1 bg-white/20 px-2 py-0.5 rounded-full text-[10px] font-semibold mb-1.5 backdrop-blur-sm">
-          <span>🔔 실시간 오디션 바로가기 허브</span>
+          <span>⚡ 5일 이내 최신 공고 활성 사이트</span>
         </div>
-        <h2 class="text-sm font-bold leading-snug">대한민국 모든 오디션 공고를<br>한곳에서 원터치로 확인하세요!</h2>
-        <p class="text-[11px] text-indigo-100 mt-1">영화 · 드라마 · 연극 · 뮤지컬 · 광고 캐스팅 사이트 총집합</p>
+        <h2 class="text-sm font-bold leading-snug">대한민국에서 지금 가장 활발한<br>오디션 사이트를 모았습니다!</h2>
+        <p class="text-[11px] text-indigo-100 mt-1">영화 · 드라마 · 연극 · 뮤지컬 · 광고 · 독백 대본 자료실</p>
       </div>
-      <div class="absolute -right-3 -bottom-4 text-white/10 text-7xl font-extrabold select-none">
-        ACT
-      </div>
+      <div class="absolute -right-3 -bottom-4 text-white/10 text-7xl font-extrabold select-none">LIVE</div>
     </div>
 
-    <!-- Quick Search -->
     <div class="relative">
       <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
-      <input type="text" id="searchInput" oninput="filterSites()" placeholder="오디션 사이트 이름, 장르 검색..." 
+      <input type="text" id="searchInput" oninput="filterSites()" placeholder="오디션 사이트, 독백 대본, 장르 검색..." 
         class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm">
     </div>
 
-    <!-- Category Tabs -->
     <div class="flex space-x-2 overflow-x-auto hide-scrollbar py-1">
-      <button onclick="selectCategory('전체')" class="cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition">전체 (12)</button>
-      <button onclick="selectCategory('영화/드라마')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎬 영화 · 드라마</button>
-      <button onclick="selectCategory('연극/뮤지컬')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎭 연극 · 뮤지컬</button>
-      <button onclick="selectCategory('광고/모델')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📸 광고 · 모델</button>
-      <button onclick="selectCategory('공공/기관')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🏛️ 국공립 · 기관</button>
+      <button onclick="selectCategory('전체')" class="cat-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm transition">전체 (18)</button>
+      <button onclick="selectCategory('영화/드라마')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎬 영화 · 드라마 (8)</button>
+      <button onclick="selectCategory('연극/뮤지컬')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">🎭 연극 · 뮤지컬 (4)</button>
+      <button onclick="selectCategory('광고/모델')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📸 광고 · 모델 (4)</button>
+      <button onclick="selectCategory('자료실/교육')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">📜 대본 자료실 · 아카데미 (2)</button>
     </div>
 
-    <!-- Site Cards Feed -->
-    <div id="siteList" class="space-y-2.5">
-      <!-- Cards rendered via JS -->
+    <div class="flex items-center justify-between text-xs text-slate-500 px-1">
+      <span>실시간 활성 오디션 포털</span>
+      <span>총 <b id="countDisplay" class="text-indigo-600">18</b>개 사이트</span>
     </div>
 
-    <!-- 🌟 Studio Johnmaking Branding Section 🌟 -->
+    <div id="siteList" class="space-y-2.5"></div>
+
     <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-5 shadow-lg space-y-3.5 mt-6 border border-slate-700/50">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
@@ -83,21 +71,15 @@
         </div>
         <span class="text-[10px] font-semibold bg-white/10 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30">배우 프로필 전문</span>
       </div>
-
       <p class="text-xs text-slate-300 leading-relaxed">
         캐스팅 디렉터의 시선을 사로잡는 <span class="text-amber-300 font-semibold">배우 프로필 사진 & 영상 포트폴리오</span> 맞춤 촬영을 진행합니다.
       </p>
-
-      <!-- Action Buttons -->
       <div class="grid grid-cols-2 gap-2 pt-1">
-        <!-- Kakao Open Chat -->
         <a href="https://pf.kakao.com/_xcfxkxnd/chat" target="_blank" rel="noopener noreferrer" 
           class="flex items-center justify-center space-x-1.5 bg-[#FEE500] hover:bg-[#FADA0A] text-[#191919] font-bold text-xs py-3 rounded-2xl shadow-sm transition active:scale-98">
           <i data-lucide="message-circle" class="w-4 h-4"></i>
           <span>카톡 상담하기</span>
         </a>
-
-        <!-- Instagram -->
         <a href="https://www.instagram.com/studio_johnmaking?igsh=ZnR2NHV5ZWg3N2k1" target="_blank" rel="noopener noreferrer" 
           class="flex items-center justify-center space-x-1.5 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 text-white font-bold text-xs py-3 rounded-2xl shadow-sm transition active:scale-98">
           <i data-lucide="instagram" class="w-4 h-4"></i>
@@ -106,131 +88,35 @@
       </div>
       <p class="text-[10px] text-center text-slate-400 pt-1">촬영 문의 및 포트폴리오 확인은 위 링크를 이용해 주세요.</p>
     </section>
-
   </main>
 
   <script>
     const SITES = [
-      {
-        id: 1,
-        name: "필름메이커스 (Filmmakers)",
-        category: "영화/드라마",
-        badge: "국내 1위 영화 포털",
-        description: "상업영화, 독립/단편영화, OTT 시리즈, 웹드라마 배우 모집 게시판",
-        url: "https://www.filmmakers.co.kr/actorsAudition",
-        tag: "영화 · 드라마",
-        iconColor: "bg-amber-500"
-      },
-      {
-        id: 2,
-        name: "OTR (우리들의 연극세계)",
-        category: "연극/뮤지컬",
-        badge: "대학로 1위 공연 포털",
-        description: "전국 연극, 창작극, 소극장/대극장 뮤지컬, 극단 신입 단원 모집 공고",
-        url: "https://otr.co.kr/audition/",
-        tag: "연극 · 뮤지컬",
-        iconColor: "bg-rose-500"
-      },
-      {
-        id: 3,
-        name: "플필 (Plfil)",
-        category: "영화/드라마",
-        badge: "온라인 캐스팅 플랫폼",
-        description: "제작사 공식 캐스팅 공고, 오디션 지원, 프로필 투어 접수",
-        url: "https://plfil.com/",
-        tag: "캐스팅 · 프로필",
-        iconColor: "bg-sky-500"
-      },
-      {
-        id: 4,
-        name: "스탈렛 스튜디오 (Starlet Studio)",
-        category: "영화/드라마",
-        badge: "상업영화/KAFA 공고",
-        description: "장편 상업영화 조·단역, 한국영화아카데미(KAFA), OTT 드라마 캐스팅",
-        url: "https://www.starlet-studio.co.kr/audition",
-        tag: "상업영화 · OTT",
-        iconColor: "bg-indigo-500"
-      },
-      {
-        id: 5,
-        name: "플레이DB (PlayDB)",
-        category: "연극/뮤지컬",
-        badge: "인터파크 공식 공연 포털",
-        description: "대극장 라이선스 뮤지컬, 국공립 정통 연극 전 배역 및 앙상블 오디션",
-        url: "http://www.playdb.co.kr/community/Publicity_list.asp?bbsno=29",
-        tag: "대극장 뮤지컬",
-        iconColor: "bg-purple-500"
-      },
-      {
-        id: 6,
-        name: "메가폰코리아 (Megaphone Korea)",
-        category: "영화/드라마",
-        badge: "메이저 캐스팅 포털",
-        description: "방송사, 제작사, 기획사 연합 오디션 및 영상 프로젝트 캐스팅",
-        url: "http://www.megaphonekorea.com/audition/variety",
-        tag: "공식 오디션",
-        iconColor: "bg-blue-500"
-      },
-      {
-        id: 7,
-        name: "더뮤지컬 (The Musical)",
-        category: "연극/뮤지컬",
-        badge: "뮤지컬 전문 매거진",
-        description: "신작 뮤지컬, 대형 제작사 공식 오디션 공고 및 캐스팅 소식",
-        url: "https://www.themusical.co.kr/",
-        tag: "뮤지컬 매거진",
-        iconColor: "bg-pink-500"
-      },
-      {
-        id: 8,
-        name: "KOPIS 공연예술통합전산망",
-        category: "공공/기관",
-        badge: "문체부/예술경영지원센터",
-        description: "국립극단, 시립뮤지컬단, 전국 문화재단 공공 공연 오디션 및 제작 지원 공모",
-        url: "https://kopis.or.kr/por/main/main.do",
-        tag: "국공립 · 공공",
-        iconColor: "bg-emerald-600"
-      },
-      {
-        id: 9,
-        name: "한국영화아카데미 (KAFA)",
-        category: "공공/기관",
-        badge: "영진위 영화 교육기관",
-        description: "KAFA 장편과정 및 정규과정 졸업작품 주·조연 배우 공개 모집",
-        url: "https://www.kafa.ac/",
-        tag: "영화아카데미",
-        iconColor: "bg-teal-600"
-      },
-      {
-        id: 10,
-        name: "모델나라 (Model Nara)",
-        category: "광고/모델",
-        badge: "광고/CF 구인 1위",
-        description: "TV CF, 브랜드 바이럴 영상, 패션 룩북, 뷰티/피팅 모델 실시간 섭외",
-        url: "https://modelnara.com/",
-        tag: "광고 · CF 모델",
-        iconColor: "bg-orange-500"
-      },
-      {
-        id: 11,
-        name: "캐스틱 (Castik)",
-        category: "영화/드라마",
-        badge: "숏폼/웹드라마 캐스팅",
-        description: "유튜브/숏폼 드라마, 웹시리즈, 독립영화 신인 배우 캐스팅",
-        url: "https://castik.co.kr/",
-        tag: "숏폼 · 웹드",
-        iconColor: "bg-cyan-500"
-      },
-      {
-        id: 12,
-        name: "콘테스트코리아 (연기/모델 선발)",
-        category: "광고/모델",
-        badge: "대회 · 공모전 포털",
-        description: "신인 연기자 오디션, 탤런트 선발대회, 모델 콘테스트 정보 모음",
-        url: "https://www.contestkorea.com/sub/list.php?int_gbn=1&Txt_bcode=030410001",
-        tag: "선발대회",
-        iconColor: "bg-yellow-500"
-      }
+      // 🎬 1~8. 영화 · 드라마 · 웹드라마
+      { id: 1, name: "1. 필름메이커스 (Filmmakers)", category: "영화/드라마", badge: "일 수십만 PV · 1위", description: "상업영화, 독립/단편영화, OTT 시리즈, 웹드라마 배우 모집 게시판", url: "https://www.filmmakers.co.kr/actorsAudition", tag: "영화 · 드라마", iconColor: "bg-amber-500" },
+      { id: 2, name: "2. 플필 (Plfil)", category: "영화/드라마", badge: "온라인 캐스팅 1위", description: "제작사 공식 캐스팅 공고, 실시간 오디션 지원 및 프로필 투어", url: "https://plfil.com/casting", tag: "캐스팅 플랫폼", iconColor: "bg-sky-500" },
+      { id: 3, name: "3. 캐스팅114 (Casting114)", category: "영화/드라마", badge: "오디션 & 대본 자료실", description: "영화, 드라마, 방송 연기자 오디션 정보 및 스태프 구인, 대본 자료실", url: "https://casting114.com/views/cast_atwant/list.html", tag: "오디션 아카이브", iconColor: "bg-emerald-600" },
+      { id: 4, name: "4. 스탈렛 스튜디오 (Starlet Studio)", category: "영화/드라마", badge: "상업영화 / KAFA", description: "장편 상업영화 조·단역, 한국영화아카데미, OTT 드라마 캐스팅", url: "https://www.starlet-studio.co.kr/audition", tag: "상업영화 · OTT", iconColor: "bg-indigo-500" },
+      { id: 5, name: "5. 캐스트링크 (CastLink)", category: "영화/드라마", badge: "방송사 드라마 전문", description: "tvN, JTBC 등 방송 드라마 조·단역 및 기획사 전속 오디션", url: "https://castlink.co.kr/", tag: "TV 드라마", iconColor: "bg-blue-600" },
+      { id: 6, name: "6. 메가폰코리아 (Megaphone Korea)", category: "영화/드라마", badge: "메이저 캐스팅 포털", description: "방송사, 대형 제작사, 기획사 연합 오디션 및 영상 프로젝트 캐스팅", url: "http://www.megaphonekorea.com/audition/variety", tag: "공식 오디션", iconColor: "bg-cyan-600" },
+      { id: 7, name: "7. 씨네허브 (Cinehub Korea)", category: "영화/드라마", badge: "단편영화 플랫폼", description: "국내외 독립 단편영화 배우 구인 및 영화인 네트워크", url: "http://www.cinehubkorea.com/", tag: "독립 단편영화", iconColor: "bg-red-500" },
+      { id: 8, name: "8. 캐스틱 (Castik)", category: "영화/드라마", badge: "숏폼 / 웹드라마", description: "유튜브 및 숏폼 드라마, 웹시리즈, 독립영화 신인 배우 캐스팅", url: "https://castik.co.kr/", tag: "숏폼 · 웹드", iconColor: "bg-violet-500" },
+
+      // 🎭 9~12. 연극 · 뮤지컬 · 공연예술
+      { id: 9, name: "9. OTR (우리들의 연극세계)", category: "연극/뮤지컬", badge: "대학로 공연계 1위", description: "전국 연극, 창작극, 소극장/대극장 뮤지컬, 극단 신입 단원 모집", url: "https://otr.co.kr/audition/", tag: "연극 · 뮤지컬", iconColor: "bg-rose-500" },
+      { id: 10, name: "10. 플레이DB (PlayDB)", category: "연극/뮤지컬", badge: "인터파크 공식 포털", description: "대극장 라이선스 뮤지컬, 정통 연극 전 배역 및 앙상블 공식 오디션", url: "http://www.playdb.co.kr/community/Publicity_list.asp?bbsno=29", tag: "대극장 뮤지컬", iconColor: "bg-purple-600" },
+      { id: 11, name: "11. 더뮤지컬 (The Musical)", category: "연극/뮤지컬", badge: "뮤지컬 전문 매거진", description: "신작 뮤지컬, 대형 제작사 공식 오디션 공고 및 캐스팅 소식", url: "https://www.themusical.co.kr/", tag: "뮤지컬 매거진", iconColor: "bg-pink-500" },
+      { id: 12, name: "12. KOPIS 공연예술통합전산망", category: "연극/뮤지컬", badge: "문체부 공공 포털", description: "전국 국공립 극단, 시립뮤지컬단, 문화재단 공연 오디션 및 제작 공모", url: "https://kopis.or.kr/por/main/main.do", tag: "국공립 · 공공", iconColor: "bg-emerald-600" },
+
+      // 📸 13~16. 광고 · 모델 · CF
+      { id: 13, name: "13. 모델나라 (Model Nara)", category: "광고/모델", badge: "광고/CF 모델 1위", description: "TV CF, 브랜드 바이럴 영상, 패션 룩북, 뷰티/피팅 모델 실시간 섭외", url: "https://modelnara.com/", tag: "광고 · CF 모델", iconColor: "bg-orange-500" },
+      { id: 14, name: "14. 원픽 (ONEPICK)", category: "광고/모델", badge: "엔터테인먼트 캐스팅", description: "기획사 전속 배우 오디션 및 브랜드 앰버서더/CF 모델 캐스팅", url: "https://www.myonepick.com/", tag: "소속사 · 모델", iconColor: "bg-yellow-500" },
+      { id: 15, name: "15. 콘테스트코리아", category: "광고/모델", badge: "대회 · 선발대회", description: "신인 연기자 선발대회, 탤런트 오디션, 모델 콘테스트 정보 모음", url: "https://www.contestkorea.com/sub/list.php?int_gbn=1&Txt_bcode=030410001", tag: "선발대회", iconColor: "bg-amber-600" },
+      { id: 16, name: "16. 링커리어 (Linkareer)", category: "광고/모델", badge: "청년/대학생 포털", description: "브랜드 앰버서더, 숏폼 크리에이터, 엔터테인먼트 신인 공모", url: "https://linkareer.com/", tag: "앰버서더", iconColor: "bg-sky-600" },
+
+      // 📜 17~18. 독백 대본 자료실 & 아카데미
+      { id: 17, name: "17. YSDB (연기 대본 & 독백)", category: "자료실/교육", badge: "무료 대본 아카이브 1위", description: "수천 편의 영화·드라마·연극 1인 독백 및 오디션 자유연기 대본 제공", url: "https://www.ysdb.kr/", tag: "독백 대본 자료실", iconColor: "bg-teal-600" },
+      { id: 18, name: "18. 한국영화아카데미 (KAFA)", category: "자료실/교육", badge: "영진위 영화 교육기관", description: "KAFA 장편과정 및 정규과정 졸업작품 주·조연 배우 공개 모집", url: "https://www.kafa.ac/", tag: "영화아카데미", iconColor: "bg-indigo-700" }
     ];
 
     let currentCategory = '전체';
@@ -264,6 +150,9 @@
 
     function renderList(items) {
       const container = document.getElementById('siteList');
+      const countDisplay = document.getElementById('countDisplay');
+      countDisplay.innerText = items.length;
+
       if (items.length === 0) {
         container.innerHTML = `
           <div class="text-center py-12 bg-white rounded-2xl border border-slate-200">
@@ -277,8 +166,8 @@
         <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm hover:shadow-md transition duration-200 flex flex-col justify-between">
           <div class="flex items-start justify-between mb-2">
             <div class="flex items-center space-x-2.5">
-              <div class="w-9 h-9 rounded-xl ${site.iconColor} text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
-                ${site.name.charAt(0)}
+              <div class="w-9 h-9 rounded-xl ${site.iconColor} text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0">
+                ${site.id}
               </div>
               <div>
                 <div class="flex items-center space-x-1.5">
@@ -309,8 +198,8 @@
     function shareApp() {
       if (navigator.share) {
         navigator.share({
-          title: '배우 오디션 올인원 포털 | CastCatch',
-          text: '영화, 드라마, 연극, 뮤지컬, 광고 오디션 공식 사이트를 한곳에서 확인하세요!',
+          title: '대한민국 배우 오디션 올인원 포털 | CastCatch',
+          text: '매일 새 글이 올라오는 대한민국 최고 오디션 사이트를 한곳에서 확인하세요!',
           url: window.location.href
         });
       } else {
