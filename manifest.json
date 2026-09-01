@@ -1,0 +1,24 @@
+{
+  "name": "배우 오디션 포털 | CastCatch",
+  "short_name": "CastCatch",
+  "description": "대한민국 18대 핵심 오디션 및 캐스팅 올인원 포털",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3171/3171927.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3171/3171927.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
